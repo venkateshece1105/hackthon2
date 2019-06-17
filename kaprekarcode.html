@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <title> Kaprekar's Constant </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .gameArea {
+            border: 1px solid black;
+        }
+        #tableData {
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <h3>Kaprekar's Constant</h3>
+            </div>
+        </div>
+        <div class="gameArea">
+            <div class="row" style="margin-top:40px; margin-left: 20%">
+                <div class="col-lg-6">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter the number to check"
+                                id="userInput">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-primary"onClick="generateKaprekarTable()">Check</button>
+                </div>
+            </div>
+            <div class="row" id="tableData">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Descending Value</th>
+                            <th scope="col">Ascending Value</th>
+                            <th scope="col">Difference Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        var numberInAscendingOrder;
+        var numberInDescendingOrder;
+        
+        function generateKaprekarTable() {
+            var counter = 1
+            var numberToCheck = document.getElementById("userInput").value;
+            document.getElementById("table").innerHTML = ""
+            
+            while(numberToCheck !== 6174) {
+                sortInAscendingOrder(numberToCheck)
+                sortInDescendingOrder(numberToCheck)
+                numberToCheck = numberInDescendingOrder - numberInAscendingOrder
+                
+                
+                document.getElementById("tableData").style.display = "block";
+                document.getElementById("table").innerHTML += "<tr><th scope='row'>"+ counter +"</th><td>"+ numberInDescendingOrder+"</td><td>"+numberInAscendingOrder+"</td><td class = 'highlightRow'>"+numberToCheck+"</td></tr>"
+                
+                if(document.getElementsByClassName("highlightRow")[counter - 1].innerText == 6174) {
+                    
+                    document.getElementsByClassName("highlightRow")[counter - 1].style.color = "red";
+                }
+                counter ++
+            }
+            
+        }
+        function sortInAscendingOrder(value) {
+            var spliitedArray = value.toString().split('')
+            var numberMid = spliitedArray.sort()
+            numberInAscendingOrder = Number(numberMid.join().replace(/,/gi, ''))
+            console.log(numberInAscendingOrder)
+        }
+        function sortInDescendingOrder(value) {
+            var spliitedArray = value.toString().split('')
+            numberInDescendingOrder = Number(spliitedArray.sort().reverse().join().replace(/,/gi, ''))
+            console.log(numberInDescendingOrder)
+        }
+        
+    </script>
+</body>
+
+</html>
